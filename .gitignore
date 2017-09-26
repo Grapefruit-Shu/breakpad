@@ -1,0 +1,3 @@
+breakpad/*
+depot_tools/*
+*.pyc
