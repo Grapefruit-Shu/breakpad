@@ -106,7 +106,6 @@ def updateRepository():
 
 
 def createPackage(build_root, version, platform):
-    print platform
     archive_name = 'breakpad-' + version + '-' + platform + ".tar.gz"
     cmd = ['cmake', '-E', 'tar', 'cvzf', archive_name, version]
 
