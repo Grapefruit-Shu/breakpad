@@ -41,7 +41,6 @@ def parseArguments():
     parser.add_argument("--depot_tools", dest="depot_tools", default=None, help="Location for depot tools checkout directory")
     parser.add_argument("-v", "--version", dest="version", default=None, help="Name to give build, default=git revision")
     parser.add_argument("-p", "--platform", dest="platform", default=default_platform, help="Name of platform to generate for ('linux-x64', 'win32', 'osx', or 'linux-android-armeabi-v7a'; default: host platform)")
-    parser.add_argument("-c", "--configuration", dest="configuration", default="Both", help="Build configuration ('Debug', 'Release', or 'Both'), default=Both")
     parser.add_argument("--clean", action='store_true', help="Clean the breakpad directory first. This will delete \"src\" directory and any changes within")
     parser.add_argument("--no-update", action='store_false', dest='update', help="Skip updating the breakpad repository first")
     parser.add_argument("--no-package", action='store_false', dest="package", help="Skip generating the package")
@@ -106,9 +105,8 @@ def updateRepository():
     return True
 
 
-def createPackage(build_root, version):
-    platform = 'osx'
-    platform = 'linux-x64'
+def createPackage(build_root, version, platform):
+    print platform
     archive_name = 'breakpad-' + version + '-' + platform + ".tar.gz"
     cmd = ['cmake', '-E', 'tar', 'cvzf', archive_name, version]
 
@@ -153,7 +151,7 @@ def main():
 
     version = getRevision(os.path.join(breakpad_dir, 'src'))
     build(version)
-    createPackage(os.path.join(breakpad_dir), version)
+    createPackage(breakpad_dir, version, args.platform)
 
 
 main()
