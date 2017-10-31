@@ -23,12 +23,12 @@ def build(version):
         cmd = ["./configure", "-prefix", os.path.join(breakpad_dir, version)]
         if not check_command(cmd, cwd=os.path.join(breakpad_dir, 'src')):
             print >> sys.stderr, "Failed to run configure in path: \"%s\"" % os.path.join(breakpad_dir, 'src')
-            exit 1
+            exit(1)
 
         cmd = ["make", "install"]
         if not check_command(cmd, cwd=os.path.join(breakpad_dir, 'src')):
             print >> sys.stderr, "Failed to make install in path: \"%s\"" % os.path.join(breakpad_dir, 'src')
-            exit 1
+            exit(1)
     elif osx:
         # Build breakpad framework
         breakpad_client_dir = os.path.join(breakpad_dir, 'src', 'src', 'client', 'mac')
@@ -36,19 +36,19 @@ def build(version):
 
         if not check_command(cmd, cwd=breakpad_client_dir):
             print >> sys.stderr, "Failed to build Breakpad framework"
-            exit 1
+            exit(1)
         breakpad_framework_build_path = os.path.join(breakpad_client_dir, 'Breakpad.Framework')
         dump_syms_dir = os.path.join(breakpad_dir, 'src', 'src', 'tools', 'mac', 'dump_syms')
 
         cmd = ['cp', '-R', breakpad_framework_build_path, dump_syms_dir]
         if not check_command(cmd):
             print >> sys.stderr, "Failed to copy breakpad framework to dump_syms directory."
-            exit 1
+            exit(1)
 
         cmd = ['xcodebuild']
         if not check_command(cmd, cwd=dump_syms_dir):
             print >> sys.stderr, "Failed to build dump syms target"
-            exit 1
+            exit(1)
 
 
 def parseArguments():
