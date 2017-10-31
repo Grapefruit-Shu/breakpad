@@ -37,7 +37,7 @@ def build(version):
         if not check_command(cmd, cwd=breakpad_client_dir):
             print >> sys.stderr, "Failed to build Breakpad framework"
             exit(1)
-        breakpad_framework_build_path = os.path.join(breakpad_client_dir, 'Breakpad.Framework')
+        breakpad_framework_build_path = os.path.join(breakpad_client_dir, 'build', 'Release', 'Breakpad.Framework')
         dump_syms_dir = os.path.join(breakpad_dir, 'src', 'src', 'tools', 'mac', 'dump_syms')
 
         cmd = ['cp', '-R', breakpad_framework_build_path, dump_syms_dir]
